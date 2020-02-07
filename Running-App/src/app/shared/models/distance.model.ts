@@ -11,4 +11,8 @@ export class Distance {
         this.length = length;
         this.unit = unit;
     }
+
+    public toString():string{
+        return `${this.length} ${this.unit}`;
+    }
 }

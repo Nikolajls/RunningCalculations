@@ -11,18 +11,26 @@ import { ConversionService } from './conversion.service';
 })
 export class CalculationService {
 
-  constructor(private conversionService: ConversionService) { }
+  constructor(private conversionService: ConversionService) { 
 
-
-  public calculatePace(initialRun: Run, desiredDistanceUnit: DistanceUnit, desiredPaceUnit: PaceUnit): Pace {
-    console.log(`The runner ran ${initialRun.distance.length} ${initialRun.distance.unit} in ${initialRun.time.toString()}`);
-    let distance = this.conversionService.ConvertToUnit(initialRun.distance, desiredDistanceUnit);
-    let time = this.conversionService.convertTimeStampToUnitNumber(initialRun.time, desiredPaceUnit);
-    let pace = new Pace(distance.length / time, desiredPaceUnit, desiredDistanceUnit);
-
-    console.log(`Initial distance ${initialRun.distance.length} ${initialRun.distance.unit} calculation will be used with:${distance.length} ${distance.unit}`)
-    console.log(`The run was run in a pace of ${pace.toString()}`)
-    return pace;
   }
 
+
+  public calculateTime(run: Run):Timespan {
+    return new Timespan();
+  }
+
+  public calculateDistance(run: Run, distanceunit: DistanceUnit): Distance {
+    let totalTime = this.conversionService.convertTimeStampToUnitNumber(run.time, run.pace.Unit);
+    let speed = this.conversionService.convertSpeedUnit(run.pace, distanceunit);
+    let distance = new Distance(totalTime * speed, distanceunit);
+    return distance;
+  }
+
+  public calculatePace(initialRun: Run, desiredDistanceUnit: DistanceUnit, desiredPaceUnit: PaceUnit): Pace {
+    let distance = this.conversionService.convertDistanceToUnit(initialRun.distance, desiredDistanceUnit);
+    let time = this.conversionService.convertTimeStampToUnitNumber(initialRun.time, desiredPaceUnit);
+    let pace = new Pace(distance.length / time, desiredPaceUnit, desiredDistanceUnit);
+    return pace;
+  }
 }

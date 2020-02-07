@@ -7,16 +7,16 @@ export enum PaceUnit {
 }
 
 export class Pace {
-    public time: number;
+    public speed: number;
     public distanceUnit: DistanceUnit;
     public Unit: PaceUnit;
     constructor(time:number, unit: PaceUnit, distanceUnit: DistanceUnit){
-        this.time = time;
+        this.speed = time;
         this.Unit = unit;
         this.distanceUnit =  distanceUnit;
     }
 
     public toString(): string{
-        return `${this.time} ${this.distanceUnit}/${this.Unit}`
+        return `${this.speed} ${this.distanceUnit}/${this.Unit}`
     }
 }

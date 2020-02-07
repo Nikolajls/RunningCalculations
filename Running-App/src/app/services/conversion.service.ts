@@ -11,9 +11,21 @@ export class ConversionService {
 
   constructor() { }
 
-  
-  public ConvertToUnit(distance: Distance, newUnit: DistanceUnit): Distance {
-    if(distance.unit == newUnit){
+
+  public convertSpeedUnit(pace: Pace, distanceunit: DistanceUnit): number {
+    if (distanceunit === pace.distanceUnit) {
+      return pace.speed;
+    }
+    if (pace.distanceUnit == DistanceUnit.KM && distanceunit == DistanceUnit.M) {
+      return pace.speed * 1000;
+    } else if (pace.distanceUnit == DistanceUnit.M && distanceunit == DistanceUnit.KM) {
+      return pace.speed / 1000;
+    }
+  }
+
+
+  public convertDistanceToUnit(distance: Distance, newUnit: DistanceUnit): Distance {
+    if (distance.unit == newUnit) {
       return distance;
     }
 

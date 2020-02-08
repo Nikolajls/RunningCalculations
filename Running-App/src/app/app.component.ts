@@ -15,8 +15,16 @@ export class AppComponent {
 
   constructor(private calculationService: CalculationService ) {
     console.log("Running app component ctor");
-    this.testDistance();
+    this.testTime();
   }
+
+  public testTime(){
+    let run = new Run();
+    run.pace = new Pace(12, PaceUnit.PrHour, DistanceUnit.KM);
+    run.distance = new Distance(3, DistanceUnit.KM);
+    var result = this.calculationService.calculateTime(run);
+  }
+
   public testDistance(){
     let run = new Run();
     run.time= new Timespan();

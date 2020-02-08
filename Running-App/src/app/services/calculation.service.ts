@@ -17,6 +17,10 @@ export class CalculationService {
 
 
   public calculateTime(run: Run):Timespan {
+    console.log(`The runner ran ${run.distance.toString()} at pace ${run.pace.toString()}`);
+  
+    let speed = this.conversionService.convertSpeedUnit(run.pace, run.distance.unit);
+    //let distance = new Distance(totalTime * speed, distanceunit);
     return new Timespan();
   }
 

@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import {ConversionService} from './services/conversion.service';
-import {CalculationService} from './services/calculation.service';
+import { ConversionService } from './services/conversion.service';
+import { CalculationService } from './services/calculation.service';
 import { Run } from './shared/models/run.model';
 import { Timespan } from './shared/models/timespan.model';
 import { Distance, DistanceUnit } from './shared/models/distance.model';
-import { PaceUnit, Pace } from './shared/models/pace.model';
+import { Pace } from './shared/models/pace.model';
+import { TimeUnit } from './shared/models/timeunit.model';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,38 +15,31 @@ import { PaceUnit, Pace } from './shared/models/pace.model';
 export class AppComponent {
   title = 'Running-App';
 
-  constructor(private calculationService: CalculationService ) {
+  constructor(private calculationService: CalculationService) {
     console.log("Running app component ctor");
     this.testTime();
   }
 
-  public testTime(){
+  public testTime() {
     let run = new Run();
-    run.pace = new Pace(12, PaceUnit.PrHour, DistanceUnit.KM);
+    run.pace = new Pace(250, TimeUnit.Minute, DistanceUnit.M);
     run.distance = new Distance(3, DistanceUnit.KM);
     var result = this.calculationService.calculateTime(run);
+
   }
 
-  public testDistance(){
+  public testDistance() {
     let run = new Run();
-    run.time= new Timespan();
-    run.time.days = 0;
-    run.time.hours = 0 ;
-    run.time.minutes = 15;
-    run.time.seconds = 0;
-    run.pace = new Pace(100, PaceUnit.PrSecond, DistanceUnit.KM);
+    run.time = new Timespan(0, 0, 15, 0);
+    run.pace = new Pace(100, TimeUnit.Second, DistanceUnit.KM);
     var result = this.calculationService.calculateDistance(run, DistanceUnit.M);
   }
 
 
   public testPace() {
-   let run = new Run();
-   run.distance = new Distance(3, DistanceUnit.KM)
-   run.time= new Timespan();
-   run.time.days = 0;
-   run.time.hours = 0 ;
-   run.time.minutes = 15;
-   run.time.seconds = 0;
-   var result = this.calculationService.calculatePace(run, DistanceUnit.M, PaceUnit.PrSecond);
+    let run = new Run();
+    run.distance = new Distance(3, DistanceUnit.KM)
+    run.time = new Timespan(0, 0, 15, 0);
+    var result = this.calculationService.calculatePace(run, DistanceUnit.M, TimeUnit.Second);
   }
 }

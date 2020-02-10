@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Run } from "../shared/models/run.model"
 import { DistanceUnit, Distance } from '../shared/models/distance.model';
-import { PaceUnit, Pace } from '../shared/models/pace.model';
+import { Pace } from '../shared/models/pace.model';
 import { Timespan } from '../shared/models/timespan.model';
+import {TimeUnit} from '../shared/models/timeunit.model'
 
 import { timer } from 'rxjs';
 import { ConversionService } from './conversion.service';
@@ -17,11 +18,13 @@ export class CalculationService {
 
 
   public calculateTime(run: Run):Timespan {
-    console.log(`The runner ran ${run.distance.toString()} at pace ${run.pace.toString()}`);
-  
     let speed = this.conversionService.convertSpeedUnit(run.pace, run.distance.unit);
-    //let distance = new Distance(totalTime * speed, distanceunit);
-    return new Timespan();
+    let time = run.distance.length / speed;  
+    console.log("TIME", time, run.pace.Unit);
+    let timeSpan = Timespan.fromUnit(time, run.pace.Unit);
+    console.log(`${timeSpan.toString()}`)
+
+    return timeSpan;
   }
 
   public calculateDistance(run: Run, distanceunit: DistanceUnit): Distance {
@@ -31,10 +34,10 @@ export class CalculationService {
     return distance;
   }
 
-  public calculatePace(initialRun: Run, desiredDistanceUnit: DistanceUnit, desiredPaceUnit: PaceUnit): Pace {
+  public calculatePace(initialRun: Run, desiredDistanceUnit: DistanceUnit, desiredTimeUnit: TimeUnit): Pace {
     let distance = this.conversionService.convertDistanceToUnit(initialRun.distance, desiredDistanceUnit);
-    let time = this.conversionService.convertTimeStampToUnitNumber(initialRun.time, desiredPaceUnit);
-    let pace = new Pace(distance.length / time, desiredPaceUnit, desiredDistanceUnit);
+    let time = this.conversionService.convertTimeStampToUnitNumber(initialRun.time, desiredTimeUnit);
+    let pace = new Pace(distance.length / time, desiredTimeUnit, desiredDistanceUnit);
     return pace;
   }
 }

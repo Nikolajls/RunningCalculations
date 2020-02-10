@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Run } from "../shared/models/run.model"
 import { DistanceUnit, Distance } from '../shared/models/distance.model';
-import { PaceUnit, Pace } from '../shared/models/pace.model';
+import {  Pace } from '../shared/models/pace.model';
 import { Timespan } from '../shared/models/timespan.model';
+import { TimeUnit } from '../shared/models/timeunit.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,6 @@ import { Timespan } from '../shared/models/timespan.model';
 export class ConversionService {
 
   constructor() { }
-
 
   public convertSpeedUnit(pace: Pace, distanceunit: DistanceUnit): number {
     if (distanceunit === pace.distanceUnit) {
@@ -36,14 +36,14 @@ export class ConversionService {
     }
   }
 
-  public convertTimeStampToUnitNumber(time: Timespan, paceUnit: PaceUnit) {
-    if (paceUnit == PaceUnit.PrDay) {
+  public convertTimeStampToUnitNumber(time: Timespan, timeUnit: TimeUnit) {
+    if (timeUnit == TimeUnit.Day) {
       return time.totalDays();
-    } else if (paceUnit == PaceUnit.PrHour) {
+    } else if (timeUnit == TimeUnit.Hour) {
       return time.totalHours();
-    } else if (paceUnit == PaceUnit.PrMinute) {
+    } else if (timeUnit == TimeUnit.Minute) {
       return time.totalMinutes();
-    } else if (paceUnit == PaceUnit.PrSecond) {
+    } else if (timeUnit == TimeUnit.Second) {
       return time.totalSeconds();
     }
   }

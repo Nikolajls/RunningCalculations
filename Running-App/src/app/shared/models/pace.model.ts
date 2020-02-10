@@ -1,16 +1,11 @@
 import {DistanceUnit} from "./distance.model";
-export enum PaceUnit {
-    PrDay = "DAY",
-    PrHour = "HOUR",
-    PrMinute = "MINUTE",
-    PrSecond = "SECOND"
-}
+import { TimeUnit } from './timeunit.model';
 
 export class Pace {
     public speed: number;
     public distanceUnit: DistanceUnit;
-    public Unit: PaceUnit;
-    constructor(time:number, unit: PaceUnit, distanceUnit: DistanceUnit){
+    public Unit: TimeUnit;
+    constructor(time:number, unit: TimeUnit, distanceUnit: DistanceUnit){
         this.speed = time;
         this.Unit = unit;
         this.distanceUnit =  distanceUnit;

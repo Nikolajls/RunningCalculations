@@ -20,10 +20,7 @@ export class CalculationService {
   public calculateTime(run: Run):Timespan {
     let speed = this.conversionService.convertSpeedUnit(run.pace, run.distance.unit);
     let time = run.distance.length / speed;  
-    console.log("TIME", time, run.pace.Unit);
     let timeSpan = Timespan.fromUnit(time, run.pace.Unit);
-    console.log(`${timeSpan.toString()}`)
-
     return timeSpan;
   }
 

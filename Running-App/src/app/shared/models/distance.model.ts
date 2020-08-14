@@ -8,6 +8,8 @@ export class Distance {
     public unit: DistanceUnit;
 
     constructor(length: number, unit: DistanceUnit){
+        if(length < 0.0001)
+            throw new Error("Unable to create distance with less than 1");
         this.length = length;
         this.unit = unit;
     }

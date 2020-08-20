@@ -1,17 +1,12 @@
-import {DistanceUnit} from "./distance.model";
+import {DistanceUnit, IDistance} from "./distance.model";
 import { TimeUnit } from './timeunit.model';
 
 export class Pace {
-    public speed: number;
-    public distanceUnit: DistanceUnit;
-    public Unit: TimeUnit;
-    constructor(time:number, unit: TimeUnit, distanceUnit: DistanceUnit){
-        this.speed = time;
-        this.Unit = unit;
-        this.distanceUnit =  distanceUnit;
+    constructor(  public paceDistance: IDistance, public Unit: TimeUnit){
     }
 
     public toString(): string{
-        return `${this.speed} ${this.distanceUnit}/${this.Unit}`
+        return "";
+     //   return `${this.speed} ${this.distanceUnit}/${this.Unit}`
     }
 }

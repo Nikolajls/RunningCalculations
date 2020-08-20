@@ -1,14 +1,12 @@
 import {Timespan} from './timespan.model';
-import {Distance} from './distance.model';
+import {IDistance} from './distance.model';
 import {Pace} from './pace.model';
 
 export class Run {
     constructor( ){
 
     }
-    public distance: Distance;
+    public distance: IDistance;
     public pace: Pace;
     public time: Timespan;
-
-
 }

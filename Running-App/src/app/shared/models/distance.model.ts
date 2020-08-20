@@ -3,18 +3,50 @@ export enum DistanceUnit{
  M = "M"
 }
 
-export class Distance {
-    public length: number;
-    public unit: DistanceUnit;
+export interface IDistance{
+    length: number;
+    convertTo(newUnit:DistanceUnit):IDistance
+}
 
-    constructor(length: number, unit: DistanceUnit){
+export abstract class DistanceBase implements IDistance{
+    abstract length:number;
+    abstract convertTo(newUnit:DistanceUnit):IDistance
+ 
+}
+
+export class Kilometer extends DistanceBase{ 
+    constructor(public length: number){
+        super();
         if(length < 0.0001)
-            throw new Error("Unable to create distance with less than 1");
-        this.length = length;
-        this.unit = unit;
+            throw new Error("Unable to create kilometer with less than 1");
     }
 
-    public toString():string{
-        return `${this.length} ${this.unit}`;
+    private GetMeters():Meter{
+        return new Meter(length * 1000);
+    }
+    public convertTo(newUnit: DistanceUnit): IDistance {
+        if(newUnit == DistanceUnit.M){
+            return this.GetMeters();
+        }
+        return this;
+    }
+}
+
+export class Meter extends DistanceBase{
+    constructor(public length: number){
+        super();
+        if(length < 0.0001)
+            throw new Error("Unable to create meter with less than 1");
+    }
+
+    public GetKilometers():Kilometer{
+        return new Kilometer(length / 1000);
+    }
+
+    convertTo(newUnit: DistanceUnit): IDistance {
+        if(newUnit == DistanceUnit.M){
+            return this.GetKilometers();
+        }
+        return this;
     }
 }

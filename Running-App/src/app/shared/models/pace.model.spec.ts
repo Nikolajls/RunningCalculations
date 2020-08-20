@@ -1,9 +1,9 @@
 import { Pace } from './pace.model';
 import { TimeUnit } from './timeunit.model';
-import { DistanceUnit } from './distance.model';
+import { DistanceUnit, Kilometer } from './distance.model';
 
 describe('Pace', () => {
   it('should create an instance', () => {
-    expect(new Pace(12, TimeUnit.Minute, DistanceUnit.KM)).toBeTruthy();
+    expect(new Pace(new Kilometer(12), TimeUnit.Hour)).toBeTruthy();
   });
 });

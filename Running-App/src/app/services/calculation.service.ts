@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Run } from "../shared/models/run.model"
-import { DistanceUnit, Distance } from '../shared/models/distance.model';
+import { DistanceUnit, Kilometer, Meter } from '../shared/models/distance.model';
 import { Pace } from '../shared/models/pace.model';
 import { Timespan } from '../shared/models/timespan.model';
 import {TimeUnit} from '../shared/models/timeunit.model'
@@ -18,7 +18,7 @@ export class CalculationService {
 
 
   public calculateTime(run: Run):Timespan {
-    let speed = this.conversionService.convertSpeedUnit(run.pace, run.distance.unit);
+    let speed = this.conversionService.convertSpeedUnit(run.pace, run.distance);
     let time = run.distance.length / speed;  
     let timeSpan = Timespan.fromUnit(time, run.pace.Unit);
     return timeSpan;

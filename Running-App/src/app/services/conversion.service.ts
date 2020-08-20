@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Run } from "../shared/models/run.model"
-import { DistanceUnit, Distance } from '../shared/models/distance.model';
+import { DistanceUnit, Meter, Kilometer, IDistance } from '../shared/models/distance.model';
 import {  Pace } from '../shared/models/pace.model';
 import { Timespan } from '../shared/models/timespan.model';
 import { TimeUnit } from '../shared/models/timeunit.model';
@@ -12,7 +12,13 @@ export class ConversionService {
 
   constructor() { }
 
-  public convertSpeedUnit(pace: Pace, distanceunit: DistanceUnit): number {
+  /**
+   * Takes a pace object that describes what pace the run was done with - and the type of distance of it.
+   * Then calculates the 
+   * @param pace 
+   * @param distanceunit 
+   */
+  public convertSpeedUnit(pace: Pace, distance: IDistance): number {
     if (distanceunit === pace.distanceUnit) {
       return pace.speed;
     }
@@ -24,16 +30,8 @@ export class ConversionService {
   }
 
 
-  public convertDistanceToUnit(distance: Distance, newUnit: DistanceUnit): Distance {
-    if (distance.unit == newUnit) {
-      return distance;
-    }
-
-    if (distance.unit == DistanceUnit.M && newUnit == DistanceUnit.KM) {
-      return new Distance(distance.length / 1000, newUnit);
-    } else if (distance.unit == DistanceUnit.KM && newUnit == DistanceUnit.M) {
-      return new Distance(distance.length * 1000, newUnit);
-    }
+  public convertToDistanceUnit(currentDistance: IDistance, newUnit: DistanceUnit): IDistance {
+   return currentDistance.convertTo(newUnit);
   }
 
   public convertTimeStampToUnitNumber(time: Timespan, timeUnit: TimeUnit) {

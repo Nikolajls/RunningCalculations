@@ -6,7 +6,6 @@ export class Pace {
     }
 
     public toString(): string{
-        return "";
-     //   return `${this.speed} ${this.distanceUnit}/${this.Unit}`
+       return `${this.paceDistance.getLength()} ${this.paceDistance.getUnit().toString() }/${this.Unit}`
     }
 }

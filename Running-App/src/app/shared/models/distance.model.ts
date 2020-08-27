@@ -1,52 +1,94 @@
-export enum DistanceUnit{
- KM = "KM",
- M = "M"
+export enum DistanceUnit {
+    KM = "KM",
+    M = "M",
+    Miles = "Miles"
 }
 
-export interface IDistance{
-    length: number;
-    convertTo(newUnit:DistanceUnit):IDistance
+export interface IDistance {
+    getUnit(): DistanceUnit;
+    getLength(): number;
+    toMeters(): Meter;
+    fromMeters(meters: number): IDistance;
+
 }
 
-export abstract class DistanceBase implements IDistance{
-    abstract length:number;
-    abstract convertTo(newUnit:DistanceUnit):IDistance
- 
+export abstract class DistanceBase implements IDistance {
+    protected abstract meterFactor: number;
+    abstract toMeters(): Meter;
+    abstract getUnit(): DistanceUnit;
+    abstract fromMeters(meters: number): IDistance;
+    constructor(protected length: number = 0) {
+
+    }
+    getLength(): number {
+        return this.length;
+    }
 }
 
-export class Kilometer extends DistanceBase{ 
-    constructor(public length: number){
-        super();
-        if(length < 0.0001)
-            throw new Error("Unable to create kilometer with less than 1");
+export class Meter extends DistanceBase {
+    protected meterFactor: number = 1;
+    public getUnit(): DistanceUnit {
+        return DistanceUnit.M;
     }
 
-    private GetMeters():Meter{
-        return new Meter(length * 1000);
+    constructor(initialLength: number = 1) {
+        super(initialLength);
     }
-    public convertTo(newUnit: DistanceUnit): IDistance {
-        if(newUnit == DistanceUnit.M){
-            return this.GetMeters();
-        }
+    toMeters(): Meter {
+        return this;
+    }
+
+    fromMeters(meters: number): IDistance {
+        this.length = meters;
+        return this;
+    }
+
+}
+
+export class Kilometer extends DistanceBase {
+    protected meterFactor: number = 1000;
+    public getUnit(): DistanceUnit {
+        return DistanceUnit.KM;
+    }
+
+    constructor(initialLength: number = 1) {
+        super(initialLength);
+    }
+    toMeters(): Meter {
+        let inMeters = this.length * this.meterFactor;
+        let meters = new Meter();
+        meters.fromMeters(inMeters);
+        return meters;
+    }
+
+    fromMeters(meters: number): IDistance {
+        this.length = meters / this.meterFactor;
         return this;
     }
 }
 
-export class Meter extends DistanceBase{
-    constructor(public length: number){
-        super();
-        if(length < 0.0001)
-            throw new Error("Unable to create meter with less than 1");
+export class Mile extends DistanceBase {
+    protected meterFactor: number = 1609.344;
+
+    constructor(initialLength: number = 1) {
+        super(initialLength);
     }
 
-    public GetKilometers():Kilometer{
-        return new Kilometer(length / 1000);
+    public getUnit(): DistanceUnit {
+        return DistanceUnit.Miles;
     }
 
-    convertTo(newUnit: DistanceUnit): IDistance {
-        if(newUnit == DistanceUnit.M){
-            return this.GetKilometers();
-        }
+    toMeters(): Meter {
+        let inMeters = this.length * this.meterFactor;
+        let meter = new Meter();
+        meter.fromMeters(inMeters);
+        return meter;
+    }
+
+    fromMeters(meters: number): IDistance {
+        this.length = meters / this.meterFactor;
         return this;
     }
 }
+
+

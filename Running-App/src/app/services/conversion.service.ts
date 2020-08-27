@@ -12,18 +12,7 @@ export class ConversionService {
 
   constructor() { }
 
-  /**
-   * Takes a pace object that describes what pace the run was done with - and the type of distance of it.
-   * Then calculates the 
-   * @param pace 
-   * @param distanceunit 
-   */
-  public convertSpeedUnit(pace: Pace, distance: IDistance): number {
-    let placeInMeters = pace.paceDistance.toMeters().getLength();
-    let distanceInMeters =  distance.toMeters().getLength();
-    let factor =  distanceInMeters / placeInMeters;
-    return factor;
-  }
+ 
 
 
   /**

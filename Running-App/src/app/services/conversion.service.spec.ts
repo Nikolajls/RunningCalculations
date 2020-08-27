@@ -21,32 +21,32 @@ describe('ConversionService', () => {
 
   // Distance conversion tests
   it('should convert 1000 meters to 1 km ', () => {
-    let newDistance = service.convertToDistanceUnit(new Meter(1000), DistanceUnit.KM)
+    let newDistance = service.convertDistance(new Meter(1000), DistanceUnit.KM)
     let expectedNewDistance = new Kilometer(1);
     expect(newDistance).toEqual(expectedNewDistance);  
   });
 
   it('should convert 432 meters to 0.432 km ', () => {
-    let newDistance = service.convertToDistanceUnit(new Meter(432), DistanceUnit.KM)
+    let newDistance = service.convertDistance(new Meter(432), DistanceUnit.KM)
     let expectedNewDistance = new Kilometer(0.432);
     expect(newDistance).toEqual(expectedNewDistance);  
   });
 
   it('should convert 3 km  to 3000 meters ', () => {
-    let newDistance = service.convertToDistanceUnit(new Kilometer(3), DistanceUnit.M)
+    let newDistance = service.convertDistance(new Kilometer(3), DistanceUnit.M)
     let expectedNewDistance = new Meter(3000);
     expect(newDistance).toEqual(expectedNewDistance);  
   });
 
   it('should convert  1.234 km  to 1234 meters ', () => {
-    let newDistance = service.convertToDistanceUnit(new Kilometer(1.234), DistanceUnit.M)
+    let newDistance = service.convertDistance(new Kilometer(1.234), DistanceUnit.M)
     let expectedNewDistance = new Meter(1234);
     expect(newDistance).toEqual(expectedNewDistance);  
   });
 
   it('should return same distance when asking for same unit ', () => {
     let originalDistance = new Kilometer(322);
-    let newDistance = service.convertToDistanceUnit(originalDistance, DistanceUnit.KM)
+    let newDistance = service.convertDistance(originalDistance, DistanceUnit.KM)
     expect(newDistance).toEqual(originalDistance);  
   });
 
@@ -59,25 +59,6 @@ describe('ConversionService', () => {
 
 
 
-  //Pace conversions.
-  it("Convert pace  12.5km/h to the distance in meters", () =>{
-    let originalPace = new Pace(12.5, TimeUnit.Hour, DistanceUnit.KM);
-    let distanceInUnit = service.convertSpeedUnit(originalPace, DistanceUnit.M);
-    expect(distanceInUnit).toEqual(12500);
- });
-
-  it("Convert pace  990m/h to the distance in meters", () =>{
-    let originalPace = new Pace(990, TimeUnit.Minute, DistanceUnit.M);
-    let distanceInUnit = service.convertSpeedUnit(originalPace, DistanceUnit.KM);
-    expect(distanceInUnit).toEqual(0.99);
-  });
-
-  it("Convert pace 990m/h to the distance in meters", () =>{
-    let originalDistance = 990;
-    let originalPace = new Pace(originalDistance, TimeUnit.Minute, DistanceUnit.M);
-    let resultingDistance = service.convertSpeedUnit(originalPace, DistanceUnit.M);
-    expect(resultingDistance).toEqual(originalDistance);
-  });
 
   //Time conversions
   it("Convert a full day to seconds", () => {

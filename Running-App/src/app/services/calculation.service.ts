@@ -22,7 +22,7 @@ export class CalculationService {
    * @param run The run to calculate from
    */
   public calculateTime(run: Run): Timespan {
-    let speed = this.conversionService.convertSpeedUnit(run.pace, run.distance);
+    let speed = this.calculateSpeedFactor(run.pace, run.distance);
     let timeSpan = Timespan.fromUnit(speed, run.pace.Unit);
     return timeSpan;
   }
@@ -34,7 +34,7 @@ export class CalculationService {
    */
   public calculateDistance(run: Run, distanceunit: DistanceUnit): IDistance {
     let totalTime = this.conversionService.convertTimeStampToUnitNumber(run.time, run.pace.Unit);
-    let speed = this.conversionService.convertSpeedUnit(run.pace, run.pace.paceDistance); 
+    let speed = this.calculateSpeedFactor(run.pace, run.pace.paceDistance); 
 
     let factor = speed / totalTime;
     let paceInMeters = run.pace.paceDistance.toMeters().getLength();
@@ -58,5 +58,18 @@ export class CalculationService {
 
     let pace = new Pace(convertedDistance, desiredTimeUnit);
     return pace;
+  }
+
+   /**
+   * Takes a pace object that describes what pace the run was done with and the distance it was run with.
+   * Then calculates the factor by diving distance by pacein meters
+   * @param pace 
+   * @param distanceunit 
+   */
+  public calculateSpeedFactor(pace: Pace, distance: IDistance): number {
+    let placeInMeters = pace.paceDistance.toMeters().getLength();
+    let distanceInMeters =  distance.toMeters().getLength();
+    let factor =  distanceInMeters / placeInMeters;
+    return factor;
   }
 }

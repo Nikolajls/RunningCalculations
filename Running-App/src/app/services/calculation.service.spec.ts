@@ -56,7 +56,9 @@ describe('CalculationService', () => {
         run.distance = new Kilometer(3);
         run.time = new Timespan(0, 0, 15, 0);
         run.pace = service.calculatePace(run, DistanceUnit.KM, TimeUnit.Hour);
-        expect(run.pace).toEqual(new Pace(new Kilometer(12), TimeUnit.Hour));
+
+        expect(run.pace.Unit).toEqual(TimeUnit.Hour);
+        expect(run.pace.paceDistance.getLength()).toEqual(new Kilometer(12).getLength());
     });
 
     it("Calculate distance to 3km using run with 15minutes and distance and pace 12000meters/h", () => {
@@ -64,6 +66,7 @@ describe('CalculationService', () => {
         run.time = new Timespan(0, 0, 15, 0);
         run.pace = new Pace(new Meter(12000), TimeUnit.Hour);
         run.distance = service.calculateDistance(run, DistanceUnit.KM);
-        expect(run.distance).toEqual(new Kilometer(3));
+        expect(run.distance.getUnit()).toEqual(DistanceUnit.KM);
+        expect(run.distance.getLength()).toEqual(3);
     });
 });

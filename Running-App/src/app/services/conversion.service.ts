@@ -22,7 +22,8 @@ export class ConversionService {
    * @param newUnit the new unit the distance should be of
    */
   public convertDistance(currentDistance: IDistance, newUnit: DistanceUnit): IDistance {
-    let distanceInMeters = currentDistance.toMeters().getLength();
+    let a = currentDistance.toMeters();
+    let distanceInMeters = a.getLength();
 
     if (newUnit == DistanceUnit.KM) {
       return new Kilometer().fromMeters(distanceInMeters);

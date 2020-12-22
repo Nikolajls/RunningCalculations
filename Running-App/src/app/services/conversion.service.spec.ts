@@ -21,46 +21,49 @@ describe('ConversionService', () => {
 
   // Distance conversion tests
   it('should convert 1000 meters to 1 km ', () => {
-    let newDistance = service.convertDistance(new Meter(1000), DistanceUnit.KM)
     let expectedNewDistance = new Kilometer(1);
-    expect(newDistance.getUnit()).toEqual(expectedNewDistance.getUnit())
-    expect(newDistance.getLength()).toEqual(expectedNewDistance.getLength())
+
+    let newDistance = service.convertDistance(new Meter(1000), DistanceUnit.KM);
+      
+    expect(newDistance.getUnit()).toEqual(expectedNewDistance.getUnit());
+    expect(newDistance.getLength()).toEqual(expectedNewDistance.getLength());
   });
 
   it('should convert 432 meters to 0.432 km ', () => {
-    let newDistance = service.convertDistance(new Meter(432), DistanceUnit.KM)
     let expectedNewDistance = new Kilometer(0.432);
-    expect(newDistance.getUnit()).toEqual(expectedNewDistance.getUnit())
-    expect(newDistance.getLength()).toEqual(expectedNewDistance.getLength()) 
+
+    let newDistance = service.convertDistance(new Meter(432), DistanceUnit.KM);
+  
+    expect(newDistance.getUnit()).toEqual(expectedNewDistance.getUnit());
+    expect(newDistance.getLength()).toEqual(expectedNewDistance.getLength());
   });
 
-  it('should convert 3 km  to 3000 meters ', () => {
-    let newDistance = service.convertDistance(new Kilometer(3), DistanceUnit.M)
+  it('should convert 3 km  to 3000 meters ', () => {    
     let expectedNewDistance = new Meter(3000);
-    expect(newDistance.getUnit()).toEqual(expectedNewDistance.getUnit())
-    expect(newDistance.getLength()).toEqual(expectedNewDistance.getLength())
+
+    let newDistance = service.convertDistance(new Kilometer(3), DistanceUnit.M);
+
+    expect(newDistance.getUnit()).toEqual(expectedNewDistance.getUnit());
+    expect(newDistance.getLength()).toEqual(expectedNewDistance.getLength());
   });
 
   it('should convert  1.234 km  to 1234 meters ', () => {
     let expectedNewDistance = new Meter(1234);
-    let newDistance = service.convertDistance(new Kilometer(1.234), DistanceUnit.M)    
-    expect(newDistance.getUnit()).toEqual(expectedNewDistance.getUnit())
-    expect(newDistance.getLength()).toEqual(expectedNewDistance.getLength())
+
+    let newDistance = service.convertDistance(new Kilometer(1.234), DistanceUnit.M) ;
+
+    expect(newDistance.getUnit()).toEqual(expectedNewDistance.getUnit());
+    expect(newDistance.getLength()).toEqual(expectedNewDistance.getLength());
   });
 
   it('should return same distance when asking for same unit ', () => {
     let originalDistance = new Kilometer(322);
-    let newDistance = service.convertDistance(originalDistance, DistanceUnit.KM)
-    expect(newDistance.getUnit()).toEqual(originalDistance.getUnit())
-    expect(newDistance.getLength()).toEqual(originalDistance.getLength())  
+
+    let newDistance = service.convertDistance(originalDistance, DistanceUnit.KM);
+
+    expect(newDistance.getUnit()).toEqual(originalDistance.getUnit());
+    expect(newDistance.getLength()).toEqual(originalDistance.getLength());
   });
-
-
-
-
-
-
-
 
 
 

@@ -1,7 +1,0 @@
-import { Distance } from './distance.model';
-
-describe('Distance', () => {
-  it('should create an instance', () => {
-    expect(new Distance()).toBeTruthy();
-  });
-});
